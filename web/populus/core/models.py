@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.postgres.fields import ArrayField
 from django.utils.text import slugify
 
-
 MAX_BIO_LENGTH = 210
 
 
@@ -43,7 +42,7 @@ def user_avatar_path(instance, filename):
 
 class UserProfile(BaseModel):
     '''
-    UserProfile represents our custom user attributes.BaseException
+    UserProfile represents our custom user attributes.
 
     This could be a custom User model but probably not worth
     the additional configuration here
@@ -51,34 +50,14 @@ class UserProfile(BaseModel):
 
     BAD_SLUGS = ('add', 'edit', 'remove')
 
-    user = models.OneToOneField(
-        User,
-        related_name='profile'
-        )
+    user = models.OneToOneField(User, related_name='profile')
     slug = models.SlugField(
-        blank=True,
-        unique=True,
-        max_length=128,
-        allow_unicode=True
-        )
-    photo = models.ImageField(
-        blank=True,
-        upload_to=user_avatar_path
-        )
-    bio = models.CharField(
-        blank=True,
-        max_length=MAX_BIO_LENGTH
-        )
-    site = models.URLField(
-        blank=True
-        )
-    tags = ArrayField(
-        blank=True
-        models.CharField(max_length=50), blank=True
-        )
-    links = models.TextField(
-        blank=True
-        )
+        blank=True, unique=True, max_length=128, allow_unicode=True)
+    photo = models.ImageField(blank=True, upload_to=user_avatar_path)
+    bio = models.CharField(blank=True, max_length=MAX_BIO_LENGTH)
+    site = models.URLField(blank=True)
+    tags = ArrayField(blank=True, models.CharField(max_length=50))
+    links = models.TextField(blank=True)
 
     class Meta:
         ordering = ['-id']
